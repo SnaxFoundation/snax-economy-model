@@ -12,7 +12,7 @@ system = System(total_supply=100_000_000_000,
                 block_time_in_seconds=.02,
                 daily_blocks=24 * 3600 * 2 / blockchain_speedup_multiplier,
                 block_reward_percent=3e-10 * blockchain_speedup_multiplier,
-                minimal_block_reward=3)
+                minimal_block_reward=4)
 
 steemit = Platform("Steemit",
                    share_of_supply=.01,
