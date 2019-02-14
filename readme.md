@@ -1,6 +1,6 @@
 ### Snax economy model
 
-Models SNAX tokens supply depends on integrated platforms and Block Producers reward.
+Model of SNAX tokens supply depending on integrated platforms and Block Producers reward. Plots charts after modeling done.
 
 ### Run 
 
