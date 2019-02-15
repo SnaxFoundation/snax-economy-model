@@ -1,4 +1,4 @@
-### Snax economy model
+### [Snax](https://github.com/SnaxFoundation/snax) economy model
 
 Model of SNAX tokens supply depending on integrated platforms and Block Producers reward. Plots charts after modeling done.
 
