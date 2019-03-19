@@ -15,18 +15,21 @@ class System:
                  block_time_in_seconds,
                  daily_blocks,
                  block_reward_percent,
-                 minimal_block_reward):
+                 minimal_block_reward,
+                 blockchain_speedup_multiplier):
 
+        self.speedup_multiplier = blockchain_speedup_multiplier
         self.total_supply = total_supply
         self.premine = premine
         self.circulating_tokens = premine
         self.min_supply_points = min_supply_points
         self.block_time = block_time_in_seconds
-        self.daily_blocks = daily_blocks
-        self.block_reward = block_reward_percent
-        self.minimal_block_reward = minimal_block_reward
+        self.daily_blocks = daily_blocks / blockchain_speedup_multiplier
+        self.block_reward = block_reward_percent * blockchain_speedup_multiplier
+        self.minimal_block_reward = minimal_block_reward * blockchain_speedup_multiplier
         self.total_bp_supply = 0
         self.bp_reward_graph = list()
+        self.block_reward_graph = list()
 
         self.platforms = list()
         self.parabola = get_parabola(min_supply_points, total_supply)
@@ -103,7 +106,11 @@ class System:
         self.block_number += 1
 
         # Add BP rewards
-        block_reward = self.block_reward * (self.total_supply - self.circulating_tokens)
+        block_reward = \
+            self.block_reward * \
+            block_reward_multiplier(self.circulating_tokens - self.total_bp_supply - self.premine) * \
+            (self.total_supply - self.circulating_tokens)
+
         if block_reward < self.minimal_block_reward:
             block_reward = self.minimal_block_reward
         self.circulating_tokens += block_reward
@@ -118,6 +125,7 @@ class System:
                 platform.registered_users_graph.append(platform.registered_users_share)
 
             self.bp_reward_graph.append(self.total_bp_supply)
+            self.block_reward_graph.append(block_reward / self.speedup_multiplier)
 
     async def get_tokens(self, platform):
         while self.lock_blocks:

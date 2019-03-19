@@ -19,3 +19,11 @@ def calc_parabola(a, b, c, x):
 def sigmoid(x):
     import math
     return 1 / (1 + math.exp(-x))
+
+
+def block_reward_multiplier(x):
+    import math
+    target_point = 40_000_000_000
+    x0 = math.pow(math.e, .15)
+    x1 = (math.e - x0) / target_point
+    return math.log(x0 + x * x1)
